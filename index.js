@@ -23,14 +23,12 @@ function mostrarCarrito(){
     }
     let opcionCarrito = prompt("Carrito: \n" + "\nProducto | Precio | Cantidad \n"+ carritoProteina + "\n" + carritoCreatina + "\n" + carritoVitaminas +
                      "\nPrecio Final: $" +precioFinal + "\n 1. Pagar" + "\n 2. Volver al menu");
-    switch(opcionCarrito){
-        case "1":
-            alert("Su pago se realizo con exito. Muchas gracias!");
-            break;
-        case "2":
-            menu();
-        default:
-            mostrarCarrito();
+    if(opcionCarrito==="1"){
+        alert("Su pago se realizo con exito. Muchas gracias!");
+    } else if(opcionCarrito==="2"){
+        menu();
+    }else{
+        mostrarCarrito();
     }
 }
 function mostrarPruductos(){
