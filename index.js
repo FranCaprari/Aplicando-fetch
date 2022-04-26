@@ -1,30 +1,70 @@
+let precioProteina = 4500;
+let cantidadProteina = 0;
+let carritoProteina = "";
+let precioCreatina = 3500;
+let cantidadCreatina = 0;
+let carritoCreatina = "";
+let precioVitaminas = 2000;
+let cantidadVitaminas = 0;
+let carritoVitaminas = "";
+let precioFinal = 0;
 
 
-let nombre = prompt("Ingrese el nombre de usuario: ");
-while (nombre != "francisco"){
-    switch (nombre){
-        case "":
-            alert("Porfavor ingrese un nombre de usuario");
+function mostrarCarrito(){
+    precioFinal = (precioProteina * cantidadProteina)+ (precioCreatina * cantidadCreatina)+ (precioVitaminas * cantidadVitaminas);
+    if(cantidadProteina>0){
+        carritoProteina = "Proteina | $4500 | " + cantidadProteina;
+    }
+    if(cantidadCreatina>0){
+        carritoCreatina = "Creatina | $3500 | " + cantidadCreatina;
+    }
+    if(cantidadVitaminas>0){
+        carritoVitaminas= "Vitaminas | $3500 | " + cantidadVitaminas;
+    }
+    let opcionCarrito = prompt("Carrito: \n" + "\nProducto | Precio | Cantidad \n"+ carritoProteina + "\n" + carritoCreatina + "\n" + carritoVitaminas +
+                     "\nPrecio Final: $" +precioFinal + "\n 1. Pagar" + "\n 2. Volver al menu");
+    switch(opcionCarrito){
+        case "1":
+            alert("Su pago se realizo con exito. Muchas gracias!");
+            break;
+        case "2":
+            menu();
+        default:
+            mostrarCarrito();
+    }
+}
+function mostrarPruductos(){
+    let opcionProductos = prompt("Productos:  " + "\n 1. Proteina $4500 " + "\n 2. Creatina $3500 "+ "\n 3. Vitaminas $2000 " + "\n 4. Volver al menu");
+    switch(opcionProductos){
+        case "1":
+            cantidadProteina += 1;
+            mostrarPruductos()    
+        case "2":
+            cantidadCreatina += 1;
+            mostrarPruductos()       
+        case "3":
+            cantidadVitaminas += 1;
+            mostrarPruductos()
+        default:
+            menu();
+            break;
+    }
+}
+function menu(){
+    let opcion = prompt("1. Productos" + "\n2. Carrito"+ "\n3. Salir"+"\nIngrese su opcion aqui: ");
+    switch(opcion){
+        case "1":
+            mostrarPruductos();
+            break;
+        case "2":
+            mostrarCarrito();
+            break;
+        case "3":
+            alert("Su compra ha sido cancelada.");
             break;
         default:
-            alert("Nombre de usuario incorrecto.");
-            break;
+            alert("Porfavor ingrese una opcion valida.");
+            menu();
     }
-        nombre = prompt("Ingrese el nombre de usuario: ");
 }
-alert("Nombre de usuario correcto.");
-let contrasenia = prompt("Ingrese la contraseña: ");
-while(contrasenia != "321"){
-    switch(contrasenia){
-        case "":
-            alert("Porfavor ingrese una contraseña.");
-            break;
-        default: alert("Contraseña incorrecta.")
-        break;
-    }
-    contrasenia = prompt("Ingrese la contraseña: ")
-}
-alert("Contraseña correcta.");
-if(nombre === "francisco" & contrasenia==="321"){
-    alert("Bienvenido al sistema." + " \nNombre de usuario: "+ nombre+ ". " + " \nContraseña: " + contrasenia + ".");
-}
+menu();
