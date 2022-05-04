@@ -1,68 +1,129 @@
-let precioProteina = 4500;
-let cantidadProteina = 0;
-let carritoProteina = "";
-let precioCreatina = 3500;
-let cantidadCreatina = 0;
-let carritoCreatina = "";
-let precioVitaminas = 2000;
-let cantidadVitaminas = 0;
-let carritoVitaminas = "";
-let precioFinal = 0;
+class Articulo {
+    constructor(id, nombre, precio) {
+        this.id = id;
+        this.nombre = nombre.toUpperCase();
+        this.precio = precio;
+    }
+
+    getNombre() {
+        return this.nombre;
+    }
+
+    getPrecio() {
+        return this.precio;
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    toString() {
+        return "Nombre: " + this.nombre + " Precio: " + this.precio;
+    }
+}
+
+class DataBase {
+    constructor() {
+        this.articulos = [];
+        this.articulos.push(new Articulo(1, "Proteina", 4500));
+        this.articulos.push(new Articulo(2, "Creatina", 3500));
+        this.articulos.push(new Articulo(3, "Vitaminas", 2000));
+    }
+
+    getArticulo(id) {
+        for (const articulo of this.articulos) {
+            if (articulo.getId() === id) {
+                return articulo;
+            }
+        }
+        return null;
+    }
+
+    showAllArticulos() {
+        let msg = '';
+        for (const articulo of this.articulos) {
+            msg = msg + articulo.getId() + ' - ' + articulo.getNombre() + '\n';
+        }
+        return msg;
+    }
+
+    getCantidadArticulos() {
+        return this.articulos.length;
+    }
+}
+
+function armarMenu(db) {
+    let msg = 'BODY BEST SUPLEMENTOS\n\nArtículos disponibles\n\n';
+    msg = msg + db.showAllArticulos();
+    msg = msg + '\n0 - PAGAR/SALIR';
+    msg = msg + '\n Ingrese el número del producto deseado';
+    return msg;
+}
+
+function pedirAndValidarOpcion(db) {
+    let opcion;
+    do {
+        error = false;
+        opcion = parseInt(prompt(armarMenu(db)));
+        if (isNaN(opcion)) {
+            error = true;
+        } else if (opcion < 0 || opcion > db.getCantidadArticulos()) {
+            error = true;
+        }
+    } while(error);
+    return opcion;
+}
+
+function addCompra(compras, idArticulo) {
+    if (compras.has(idArticulo)) {
+        let cantidad = compras.get(idArticulo) + 1;
+        compras.set(idArticulo, cantidad);
+    } else {
+        compras.set(idArticulo, 1);
+    }
+}
+
+function showCompras(db, compras, titulo) {
+    let msg = titulo + '\n\n';
+    for (let id of compras.keys()) {
+        let articulo = db.getArticulo(id);
+        if (articulo != null) {
+            let cantidad = compras.get(id);
+            let subtotal = articulo.getPrecio() * cantidad;
+            msg = msg + articulo.toString() + " Cantidad: " + cantidad + " Subtotal: $" + subtotal + "\n";
+        }
+    }
+    return msg;
+}
 
 
-function mostrarCarrito(){
-    precioFinal = (precioProteina * cantidadProteina)+ (precioCreatina * cantidadCreatina)+ (precioVitaminas * cantidadVitaminas);
-    if(cantidadProteina>0){
-        carritoProteina = "Proteina | $4500 | " + cantidadProteina;
+
+function showFactura(db, compras) {
+    let msg = showCompras(db, compras, 'Factura de compra');
+    let cantidad = 0;
+    let subtotal = 0;
+    for (let id of compras.keys()) {
+        let articulo = db.getArticulo(id);
+        if (articulo != null) {
+            cantidad = compras.get(id);
+            subtotal = subtotal + (articulo.getPrecio() * cantidad);
+        }
     }
-    if(cantidadCreatina>0){
-        carritoCreatina = "Creatina | $3500 | " + cantidadCreatina;
-    }
-    if(cantidadVitaminas>0){
-        carritoVitaminas= "Vitaminas | $3500 | " + cantidadVitaminas;
-    }
-    let opcionCarrito = prompt("Carrito: \n" + "\nProducto | Precio | Cantidad \n"+ carritoProteina + "\n" + carritoCreatina + "\n" + carritoVitaminas +
-                     "\nPrecio Final: $" +precioFinal + "\n 1. Pagar" + "\n 2. Volver al menu");
-    if(opcionCarrito==="1"){
-        alert("Su pago se realizo con exito. Muchas gracias!");
-    } else if(opcionCarrito==="2"){
-        menu();
-    }else{
-        mostrarCarrito();
-    }
+    msg = msg + "\n\nTOTAL:  $" + subtotal + "\n";
+    return msg; 
 }
-function mostrarPruductos(){
-    let opcionProductos = prompt("Productos:  " + "\n 1. Proteina $4500 " + "\n 2. Creatina $3500 "+ "\n 3. Vitaminas $2000 " + "\n 4. Volver al menu");
-    switch(opcionProductos){
-        case "1":
-            cantidadProteina += 1;
-            mostrarPruductos()    
-        case "2":
-            cantidadCreatina += 1;
-            mostrarPruductos()       
-        case "3":
-            cantidadVitaminas += 1;
-            mostrarPruductos()
-        default:
-            menu();
-            break;
-    }
+
+const db = new DataBase(); 
+
+let opcion = pedirAndValidarOpcion(db);
+let compras = new Map();
+while (opcion != 0) {
+    addCompra(compras, opcion);
+    alert(showCompras(db, compras, 'Estos son los articulos que tiene en su carrito: '));
+    opcion = pedirAndValidarOpcion(db);
 }
-function menu(){
-    let opcion = prompt("1. Productos" + "\n2. Carrito"+ "\n3. Salir"+"\nIngrese su opcion aqui: ");
-    switch(opcion){
-        case "1":
-            mostrarPruductos();
-            break;
-        case "2":
-            mostrarCarrito();
-            break;
-        case "3":
-            alert("Su compra ha sido cancelada.");
-            break;
-        default:
-            alert("Porfavor ingrese una opcion valida.");
-            menu();
-    }
+if (compras.size === 0) {
+    alert("Tu carrito esta vacio, muchas gracias por visitarnos!");
+} else {
+    alert(showFactura(db, compras));
 }
-menu();
