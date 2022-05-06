@@ -67,7 +67,7 @@ function pedirAndValidarOpcion(db) {
         opcion = parseInt(prompt(armarMenu(db)));
         if (isNaN(opcion)) {
             error = true;
-        } else if (opcion < 0 || opcion > db.getCantidadArticulos()) {
+        }       else if (opcion < 0 || opcion > db.getCantidadArticulos()) {
             error = true;
         }
     } while(error);
@@ -79,6 +79,16 @@ function addCompra(compras, idArticulo) {
         let cantidad = compras.get(idArticulo) + 1;
         compras.set(idArticulo, cantidad);
     } else {
+        compras.set(idArticulo, 1);
+    }
+}
+
+function deleteCompra(compras, idArticulo){
+    if(compras.has(idArticulo)){
+        let cantidad = compras.get(idArticulo) -1;
+        compras.set(idArticulo, cantidad);
+    }
+    else {
         compras.set(idArticulo, 1);
     }
 }
@@ -117,6 +127,7 @@ const db = new DataBase();
 
 let opcion = pedirAndValidarOpcion(db);
 let compras = new Map();
+
 while (opcion != 0) {
     addCompra(compras, opcion);
     alert(showCompras(db, compras, 'Estos son los articulos que tiene en su carrito: '));
