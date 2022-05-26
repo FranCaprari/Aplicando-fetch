@@ -17,7 +17,7 @@
     rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link rel="icon" href="imagenes/logo2.png" />
+  <link rel="icon" href="" />
   <title>BodyBest - Proteinas</title>
   <meta name="keywords"
     content="Suplementos en cordoba, proteina, comprar suplementos en ciudad de cordoba, comprar proteina en ciudad de cordoba, productos para aumentar masa muscular, suplementacion deportiva cordoba, proteinas ultra tech">
@@ -29,7 +29,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
       <div class="container-fluid">
         <a href="../index.html">
-          <img src="imagenes/bodybestlogo2-modified.png" alt="logoBodyBest" class="nav-logo">
+          <img src="images/bodybestlogo2-modified.png" alt="logoBodyBest" class="nav-logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,65 +65,53 @@
       </div>
     </nav>
   </header>
-  <section class="productos">
-    <h1 class="productos__titulo">PROTEINAS</h1>
-    <div class="card productos__producto1" style="width: 15rem;">
-      <img src="imagenes/wheyavena.png" alt="Whey protein con avena" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein + Avena 700Gramos.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
+  <h1 class="productos__titulo">PROTEINAS</h1>
+  <div class="productos__cabecera">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary modalBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" id="btnVerCarrito">
+      Carrito
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" >Carrito de compras</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio unitario</th>
+                    <th scope="col">Precio total</th>
+                    <th scope="col">Imagen</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaCarrito">
+                </tbody>
+              </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnVaciar" data-bs-dismiss="modal">Vaciar</button>
+            <h2 id="subtotal"> </h2>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+            <button type="button" class="btn btn-primary" id="botonPagar" data-bs-dismiss="modal">Pagar</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card productos__producto2" style="width: 15rem;">
-      <img src="imagenes/wheyultrapro.png" alt="Whey protein ultra pro" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein ultra pro sabor vainilla 1.5Kg.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
+  </div>
+  <div class="container">
+    <div id="productos" class="d-flex row flex-wrap carta">
+
     </div>
-    <div class="card productos__producto3" style="width: 15rem;">
-      <img src="imagenes/wheywoman.png" alt="Whey protein woman" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein woman x 907gramos.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-    <div class="card productos__producto4" style="width: 15rem;">
-      <img src="imagenes/wheyisolate.png" alt="Whey protein isolate" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein de suero aislada x 2 libras.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-    <div class="card productos__producto5" style="width: 15rem;">
-      <img src="imagenes/wheynitro.png" alt="Whey nitro NO2" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein nitro NO2 x 907gramos.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-    <div class="card productos__producto6" style="width: 15rem;">
-      <img src="imagenes/wheynitro.png" alt="Whey nitro NO2" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein nitro NO2 x 907gramos.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-    <div class="card productos__producto7" style="width: 15rem;">
-      <img src="imagenes/wheyburner.png" alt="Whey protein burner" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Ultra Tech Whey Protein Burner x 907 gramos.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-    <div class="card productos__producto8" style="width: 15rem;">
-      <img src="imagenes/whey2lb.png" alt="Whey protein 2Lb" class="card-img-top imgProductos" data-aos="flip-left" data-aos-duration="1000">
-      <div class="card-body">
-        <p class="card-text">Whey protein de suero de leche, sabor vainilla x 1KG.</p>
-        <a class="btn btn-primary productos__precio">$5555</a>
-      </div>
-    </div>
-  </section>
+  </div>
+
   <footer class="footer">
     <div class="footer__telefono">
       <p>Telefono: 3517537275</p>
@@ -152,9 +140,9 @@
     AOS.init();
   </script>
 </body>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="productos.js"></script>
 <script src="index.js">
 </script>
+
 </html>
-
-
- 

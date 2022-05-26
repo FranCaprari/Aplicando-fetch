@@ -1,140 +1,137 @@
-class Articulo {
-    constructor(id, nombre, precio) {
-        this.id = id;
-        this.nombre = nombre.toUpperCase();
-        this.precio = precio;
-    }
+const contenedor = document.getElementById("productos");
+const tablaCarrito = document.getElementById("tablaCarrito");
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const subtotal = document.getElementById("subtotal");
 
-    getNombre() {
-        return this.nombre;
-    }
 
-    getPrecio() {
-        return this.precio;
-    }
-
-    getId() {
-        return this.id;
-    }
-
-    toString() {
-        return "Nombre: " + this.nombre + " Precio: " + this.precio;
-    }
+const construirCarta = (item) => {
+  return (
+    `
+        <div class="col-12 mb-2 col-md-4">
+        <div class="card" style="width: 15rem;">
+        <img src="${item.imagen}" alt="${item.nombre}" class="card-img-top">
+        <div class="card-body">
+          <h3 class="card-text">${item.nombre}</h3>
+          <p class="card-text">Descripcion.....</p>
+          <p class="card-text">Stock: ${item.stock}</p>
+          <p class="card-text">Precio: $${item.precio}</p>
+          <button onclick=avisoCarrito(${item.id}) class="btn btn-primary productos__precio">Agregar al carrito</button>
+        </div>
+      </div>
+      </div>`
+  );
 }
 
-class DataBase {
-    constructor() {
-        this.articulos = [];
-        this.articulos.push(new Articulo(1, "Proteina", 4500));
-        this.articulos.push(new Articulo(2, "Creatina", 3500));
-        this.articulos.push(new Articulo(3, "Vitaminas", 2000));
-    }
-
-    getArticulo(id) {
-        for (const articulo of this.articulos) {
-            if (articulo.getId() === id) {
-                return articulo;
-            }
-        }
-        return null;
-    }
-
-    showAllArticulos() {
-        let msg = '';
-        for (const articulo of this.articulos) {
-            msg = msg + articulo.getId() + ' - ' + articulo.getNombre() + '\n';
-        }
-        return msg;
-    }
-
-    getCantidadArticulos() {
-        return this.articulos.length;
-    }
+const cargarProductos = (info, nodo, tabla) => {
+  let acumulador = "";
+  info.forEach((elem) => {
+    acumulador += tabla ? crearTabla(elem) : construirCarta(elem);
+  })
+  nodo.innerHTML = acumulador;
 }
 
-function armarMenu(db) {
-    let msg = 'BODY BEST SUPLEMENTOS\n\nArtículos disponibles\n\n';
-    msg = msg + db.showAllArticulos();
-    msg = msg + '\n0 - PAGAR/SALIR';
-    msg = msg + '\n Ingrese el número del producto deseado';
-    return msg;
+const avisoCarrito = (id) => {
+  const elegido = Productos.find(item => item.id === id);
+  const sumador = carrito.findIndex(elem => elem.id === id);
+  if (sumador === -1) {
+    carrito.push({
+      id: elegido.id,
+      nombre: elegido.nombre,
+      precio: elegido.precio,
+      cantidad: 1,
+      imagen: elegido.imagen,
+    })
+  } else {
+    carrito[sumador].cantidad = carrito[sumador].cantidad + 1;
+  }
+  cargarProductos(carrito, tablaCarrito, true);
+}
+const getCarrito = (item) => {
+
+  let acum = "";
+  item.forEach((el) =>
+    acum +=
+    `
+      <tr>
+      <th scope="row">${el.id}</th>
+      <td>${el.nombre}</td>
+      <td>${el.cantidad}</td>
+      <td>$${el.precio}</td>
+      <td>$${el.precio *el.cantidad}</td>
+      <td><img src="${el.imagen}" class="imagenCarrito"></td>
+      </tr>
+      `
+  )
+  console.log(acum);
+  tablaCarrito.innerHTML = acum;
+  carritoStorage();
+  calcularTotal();
 }
 
-function pedirAndValidarOpcion(db) {
-    let opcion;
-    do {
-        error = false;
-        opcion = parseInt(prompt(armarMenu(db)));
-        if (isNaN(opcion)) {
-            error = true;
-        }       else if (opcion < 0 || opcion > db.getCantidadArticulos()) {
-            error = true;
-        }
-    } while(error);
-    return opcion;
+function calcularTotal() {
+  let precioTotal = 0;
+  carrito.forEach((item) => {
+    precioTotal += item.precio * item.cantidad;
+  });
+  subtotal.innerHTML = `Subtotal: $${precioTotal}`
 }
 
-function addCompra(compras, idArticulo) {
-    if (compras.has(idArticulo)) {
-        let cantidad = compras.get(idArticulo) + 1;
-        compras.set(idArticulo, cantidad);
-    } else {
-        compras.set(idArticulo, 1);
+const vaciarCarrito = () => {
+  localStorage.clear();
+  carrito = [];
+
+}
+
+let btnVaciar = document.getElementById('btnVaciar');
+btnVaciar.addEventListener("click", () => {
+  Swal.fire({
+    title: '¿Estas seguro?',
+    text: "No podras revertir esto.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, vaciar.'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Carrito vaciado!',
+        'Todos los productos han sido eliminados.',
+        'success'
+      )
+      vaciarCarrito();
     }
+  })
+});
+
+
+function actualizarCarrito() {
+  calcularTotal();
 }
 
-function deleteCompra(compras, idArticulo){
-    if(compras.has(idArticulo)){
-        let cantidad = compras.get(idArticulo) -1;
-        compras.set(idArticulo, cantidad);
-    }
-    else {
-        compras.set(idArticulo, 1);
-    }
+function carritoStorage() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-function showCompras(db, compras, titulo) {
-    let msg = titulo + '\n\n';
-    for (let id of compras.keys()) {
-        let articulo = db.getArticulo(id);
-        if (articulo != null) {
-            let cantidad = compras.get(id);
-            let subtotal = articulo.getPrecio() * cantidad;
-            msg = msg + articulo.toString() + " Cantidad: " + cantidad + " Subtotal: $" + subtotal + "\n";
-        }
-    }
-    return msg;
-}
+let btnCarrito = document.getElementById('btnVerCarrito');
+btnCarrito.addEventListener("click", () => getCarrito(carrito));
 
+let botonPagar = document.getElementById('botonPagar');
+botonPagar.addEventListener('click', () =>{
+  if(carrito.length>0){
+  Swal.fire(
+    'Muchas gracias!',
+    'Su pago se ha realizado con exito.',
+    'success'
+)
+vaciarCarrito()}else{
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Parece que tu carrito esta vacio.'
+  })
+}}
+);
 
-
-function showFactura(db, compras) {
-    let msg = showCompras(db, compras, 'Factura de compra');
-    let cantidad = 0;
-    let subtotal = 0;
-    for (let id of compras.keys()) {
-        let articulo = db.getArticulo(id);
-        if (articulo != null) {
-            cantidad = compras.get(id);
-            subtotal = subtotal + (articulo.getPrecio() * cantidad);
-        }
-    }
-    msg = msg + "\n\nTOTAL:  $" + subtotal + "\n";
-    return msg; 
-}
-
-const db = new DataBase(); 
-
-let opcion = pedirAndValidarOpcion(db);
-let compras = new Map();
-
-while (opcion != 0) {
-    addCompra(compras, opcion);
-    alert(showCompras(db, compras, 'Estos son los articulos que tiene en su carrito: '));
-    opcion = pedirAndValidarOpcion(db);
-}
-if (compras.size === 0) {
-    alert("Tu carrito esta vacio, muchas gracias por visitarnos!");
-} else {
-    alert(showFactura(db, compras));
-}
+cargarProductos(Productos, contenedor, false);
+actualizarCarrito();
