@@ -2,8 +2,15 @@ const contenedor = document.getElementById("productos");
 const tablaCarrito = document.getElementById("tablaCarrito");
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const subtotal = document.getElementById("subtotal");
+let Productos = [];
 
-
+const traerProductos = async () => {
+  let response = await fetch("productos.json")
+  let data = await response.json();
+  Productos = data;
+  cargarProductos(Productos, contenedor, false);
+  
+}
 const construirCarta = (item) => {
   return (
     `
@@ -40,9 +47,22 @@ const avisoCarrito = (id) => {
       precio: elegido.precio,
       cantidad: 1,
       imagen: elegido.imagen,
+    }), Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Producto agregado!',
+      showConfirmButton: false,
+      timer: 700
     })
   } else {
     carrito[sumador].cantidad = carrito[sumador].cantidad + 1;
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Producto agregado!',
+      showConfirmButton: false,
+      timer: 700
+    });
   }
   cargarProductos(carrito, tablaCarrito, true);
 }
@@ -133,5 +153,5 @@ vaciarCarrito()}else{
 }}
 );
 
-cargarProductos(Productos, contenedor, false);
+traerProductos();
 actualizarCarrito();
