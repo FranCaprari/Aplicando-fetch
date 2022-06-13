@@ -10,20 +10,137 @@
   
   .menu {
     font-size: 1.5rem; }
-
+    .estiloTitulos, .main__titulo, .titulo-contacto, .productos__titulo, .titulo__faqs, .tituloNosotros {
+      color: red;
+      font-style: oblique;
+      text-align: center; }
+    
+    .main {
+      display: grid;
+      grid-template-columns: 45% 50%;
+      grid-template-rows: 100px 1fr;
+      grid-template-areas: "titulo titulo"
+     "promo  destacado";
+      text-align: center;
+      padding: 1rem;
+      column-gap: 2rem; }
+      .main__titulo {
+        grid-area: titulo; }
+      .main__destacado {
+        width: 100%;
+        grid-area: destacado; }
+        .main__destacado__img:hover {
+          transform: scale(1.1, 1.1);
+          transition: all .5s; }
+      .main__promo {
+        width: 100%;
+        grid-area: promo; }
+        .main__promo__img {
+          width: 60%;
+          height: 500px; }
+        .main__promo__img:hover {
+          transform: scale(1.1, 1.1);
+          transition: all .5s; }
+    
+    h2 {
+      text-align: center;
+      padding: 2rem; }
+    
+    .textConsulta {
+      margin-bottom: 0;
+      font-size: 2rem; }
+    
+    label {
+      font-size: 1.2rem; }
+    
+    .formSection {
+      max-width: 114rem;
+      margin: auto; }
+    
+    form {
+      max-width: 80rem;
+      margin: auto;
+      padding: 1rem; }
+    
+    .text {
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 200;
+      text-decoration: none;
+      text-transform: none;
+      line-height: 1.5;
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 0.1rem solid;
+      border-radius: 1rem; }
+    
+    .textArea {
+      display: flex;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 200;
+      text-decoration: none;
+      text-transform: none;
+      line-height: 1.5;
+      margin: 1rem 0;
+      padding: 1rem;
+      border: 0.1rem solid;
+      border-radius: 1rem;
+      font-family: 'Roboto', sans-serif; }
+    
+    .botonEnviar {
+      width: 100%;
+      height: 10%;
+      background-color: #31384A;
+      color: #fff;
+      font-size: 1.6rem;
+      font-weight: 200;
+      text-decoration: none;
+      text-transform: none;
+      line-height: 1.5;
+      margin: 1.5rem 0 3rem 0;
+      padding: 1rem;
+      border: 0.1rem solid;
+      border-radius: 1rem; }
+      .botonEnviar:hover {
+        cursor: pointer; }
+    
+    .contactos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 150px;
+      grid-template-areas: "ubicacion telefono horariosContacto"
+     "map map map";
+      text-align: center;
+      font-size: 1.5rem; }
+      .contactos__horarios {
+        grid-area: horariosContacto; }
+      .contactos__direccion {
+        grid-area: ubicacion; }
+      .contactos__numero {
+        grid-area: telefono; }
+      .contactos__map {
+        grid-area: map;
+        display: flex;
+        justify-content: center;
+        padding: 4rem; }
  .productos__titulo{
     color: red;
     font-style: oblique;
     text-align: center;
  }
- .carta{
-     display:flex;
-     margin: 0 200px;
-     text-align: center;
-     align-items: center;
+ .productos__cabecera{
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
  }
- .card{
-   height: 700px;
+ .card img{
+   height: 400px;
+   width: 100%;
  }
  .card-img-top{
      width: 100%;
@@ -38,32 +155,262 @@
 .imagenCarrito{
   width: 25px;
 }
-    footer {
-        border-top: solid 2px; }
-      
+.carta{
+  margin:0;
+  display:grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "prod1 prod2 prod3 prod4"
+                       "prod5 prod6 prod7 prod8";
+  row-gap: 2rem;
+
+  justify-items: center;
+  justify-content: center;
+  padding-bottom: 2rem;
+  text-align: center;
+  align-items: center;
+}
+.producto1{
+  grid-area:prod1;
+}
+.producto2{
+  grid-area:prod2;
+}
+.producto3{
+  grid-area:prod3;
+}
+.producto4{
+  grid-area:prod4;
+}
+.producto5{
+  grid-area:prod5;
+}
+.producto6{
+  grid-area:prod6;
+}
+.producto7{
+  grid-area:prod7;
+}
+.producto8{
+  grid-area:prod8;
+}
+.faqsSection {
+  padding: 5rem; }
+
+.acor_button {
+  font-size: 1.5rem;
+  color: red; }
+
+.accordion-button:not(.collapsed) {
+  color: white;
+  background-color: #212529; }
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd'd='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e"); }
+
+.accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem #212529; }
+
+.nosotros {
+  display: flex;
+  justify-content: center; }
+  .nosotros__tarjetas {
+    display: block;
+    text-align: center; }
+  .nosotros__tarjetas i {
+    display: inline-block;
+    font-size: 3rem; }
+  .nosotros__foto__instagram {
+    display: flex;
+    justify-content: center; }
+  .nosotros__mensaje {
+    display: flex;
+    justify-content: center; }
+  .nosotros__boton__instagram {
+    color: white;
+    background-color: red;
+    border: red; }
+    .nosotros__boton__instagram:hover {
+      background-color: red;
+      color: black; }
+  .nosotros__boton__contacto {
+    color: white;
+    background-color: blue; }
+    .nosotros__boton__contacto:hover {
+      background-color: white;
+      color: blue; }
+
+footer {
+  border-top: solid 2px; }
+
+.footer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "telefono ig horarios"
+ "copy copy copy";
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 5rem; }
+  .footer__copy {
+    border-top: solid 0.1rem;
+    grid-area: copy;
+    text-align: center; }
+
+#footer__redes__ig {
+  font-size: 1.5rem;
+  color: black; }
+  #footer__redes__ig:hover {
+    color: red; }
+
+#footer__redes__git {
+  font-size: 1.5rem;
+  color: black; }
+  #footer__redes__git:hover {
+    color: blue; }
+
+@media only screen and (max-width: 980px) {
+  /*-------------------Contactos---------------------------*/
+  .contactos {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 200px 150px 150px;
+    grid-template-areas: "horariosContacto"
+ "telefono"
+ "ubicacion"
+ "map";
+    text-align: center;
+    font-size: 1.5rem; }
+    .contactos__horarios {
+      grid-area: horariosContacto; }
+    .contactos__direccion {
+      grid-area: ubicacion; }
+    .contactos__numero {
+      grid-area: telefono; }
+    .contactos__map {
+      grid-area: map;
+      display: flex;
+      justify-content: center;
+      padding: 4rem; }
+    }
+    @media only screen and (max-width: 600px) {
+      body {
+        padding-left: 0;
+        padding-right: 0; }
+      .estiloTitulos, .main__titulo, .titulo-contacto, .productos__titulo, .titulo__faqs, .tituloNosotros {
+        padding-top: 2rem; }
+      .main {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 100px 1fr 1fr;
+        grid-template-areas: "titulo"
+     "promo" 
+     "destacado";
+        align-items: center;
+        text-align: center; }
+        .main__titulo {
+          grid-area: titulo;
+          width: 100%; }
+        .main__destacado {
+          grid-area: destacado; }
+          .main__destacado__img {
+            width: 100%; }
+        .main__promo {
+          grid-area: promo; }
+          .main__promo__img {
+            width: 100%; }
       .footer {
         display: grid;
         width: 100%;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: "telefono ig horarios"
-       "copy copy copy";
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas: "telefono"
+     "ig"
+     "horarios" 
+     "copy";
         align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 2rem 5rem; }
+        justify-content: center; }
+        .footer__telefono {
+          grid-area: telefono;
+          text-align: center; }
+        .footer__redes {
+          grid-area: ig;
+          text-align: center; }
+        .footer__horarios {
+          grid-area: horarios;
+          text-align: center; }
         .footer__copy {
-          border-top: solid 0.1rem;
           grid-area: copy;
           text-align: center; }
-      
-      #footer__redes__ig {
-        font-size: 1.5rem;
-        color: black; }
-        #footer__redes__ig:hover {
-          color: red; }
-      
-      #footer__redes__git {
-        font-size: 1.5rem;
-        color: black; }
-        #footer__redes__git:hover {
-          color: blue; }  
+          .modalBtn{
+            position: relative;
+          }
+          .carta{
+            display:grid;
+            grid-template-columns: 80%;
+            grid-template-areas:
+                                     "prod1"
+                                     "prod2"
+                                     "prod3"
+                                     "prod4"
+                                     "prod5"
+                                     "prod6"
+                                     "prod7"
+                                     "prod8";
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            row-gap: 2rem;
+            padding-bottom: 2rem;
+            justify-items: center;
+          }
+          .producto1{
+            grid-area:prod1;
+          }
+          .producto2{
+            grid-area:prod2;
+          }
+          .producto3{
+            grid-area:prod3;
+          }
+          .producto4{
+            grid-area:prod4;
+          }
+          .producto5{
+            grid-area:prod5;
+          }
+          .producto6{
+            grid-area:prod6;
+          }
+          .producto7{
+            grid-area:prod7;
+          }
+          .producto8{
+            grid-area:prod8;
+          }
+          .contactos {
+            display: grid;
+            grid-template-columns: 100%;
+            grid-template-rows: 200px 150px 150px;
+            grid-template-areas: "horariosContacto"
+         "telefono"
+         "ubicacion"
+         "map";
+            text-align: center;
+            font-size: 1.5rem; }
+            .contactos__horarios {
+              grid-area: horariosContacto; }
+            .contactos__direccion {
+              grid-area: ubicacion; }
+            .contactos__numero {
+              grid-area: telefono; }
+            .contactos__map {
+              grid-area: map; }
+          /*---------FAQS--------------*/
+          .faqsSection {
+            padding: 0rem; } }
+        
+        * {
+          margin: 0px;
+          padding: 0px;
+          box-sizing: border-box;
+        } 

@@ -4,6 +4,8 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const subtotal = document.getElementById("subtotal");
 let Productos = [];
 
+
+// ----- TRAER PRODUCTOS Y ARMAR CARTAS
 const traerProductos = async () => {
   let response = await fetch("productos.json")
   let data = await response.json();
@@ -14,8 +16,8 @@ const traerProductos = async () => {
 const construirCarta = (item) => {
   return (
     `
-        <div class="col-12 mb-2 col-md-4">
-        <div class="card" style="width: 15rem;">
+        <div class="">
+        <div class="card producto${item.id}">
         <img src="${item.imagen}" alt="${item.nombre}" class="card-img-top">
         <div class="card-body">
           <h3 class="card-text">${item.nombre}</h3>
@@ -36,6 +38,7 @@ const cargarProductos = (info, nodo, tabla) => {
   })
   nodo.innerHTML = acumulador;
 }
+// AGREGAR PRODUCTOS AL CARRITO
 
 const avisoCarrito = (id) => {
   const elegido = Productos.find(item => item.id === id);
@@ -87,6 +90,7 @@ const getCarrito = (item) => {
   carritoStorage();
   calcularTotal();
 }
+// CALCULAR PRECIO TOTAL EN EL CARRITO
 
 function calcularTotal() {
   let precioTotal = 0;
@@ -95,6 +99,8 @@ function calcularTotal() {
   });
   subtotal.innerHTML = `Subtotal: $${precioTotal}`
 }
+
+// VACIAR CARRITO
 
 const vaciarCarrito = () => {
   localStorage.clear();
@@ -139,12 +145,8 @@ btnCarrito.addEventListener("click", () => getCarrito(carrito));
 let botonPagar = document.getElementById('botonPagar');
 botonPagar.addEventListener('click', () =>{
   if(carrito.length>0){
-  Swal.fire(
-    'Muchas gracias!',
-    'Su pago se ha realizado con exito.',
-    'success'
-)
-vaciarCarrito()}else{
+    pagar();
+}else{
   Swal.fire({
     icon: 'error',
     title: 'Oops...',
@@ -153,5 +155,34 @@ vaciarCarrito()}else{
 }}
 );
 
+const pagar = async () => {
+
+  const productosToMap = carrito.map(Element => {
+      let nuevoElemento = 
+      {
+          title: Element.nombre,
+          description: Element.descripcionn,
+          picture_url: Element.img,
+          category_id: Element.id,
+          quantity: Element.cantidad,
+          currency_id: "ARS",
+          unit_price: Element.precio
+      }
+      return nuevoElemento
+  })
+  let response = await fetch("https://api.mercadopago.com/checkout/preferences", {
+
+      method: "POST",
+      headers: {
+          Authorization: "Bearer TEST-5075273876105105-061215-77efb2ad36435a95ab02bc9370080d4e-280315213"
+      },
+      body: JSON.stringify({
+          items: productosToMap
+      })
+  })
+  let data = await response.json()
+  console.log(data)
+  window.open(data.init_point, "_blank")
+}
 traerProductos();
 actualizarCarrito();
