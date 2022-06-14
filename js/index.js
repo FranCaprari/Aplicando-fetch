@@ -7,7 +7,7 @@ let Productos = [];
 
 // ----- TRAER PRODUCTOS Y ARMAR CARTAS
 const traerProductos = async () => {
-  let response = await fetch("productos.json")
+  let response = await fetch("../js/productos.json")
   let data = await response.json();
   Productos = data;
   cargarProductos(Productos, contenedor, false);
