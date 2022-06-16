@@ -4,7 +4,10 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 const subtotal = document.getElementById("subtotal");
 let Productos = [];
 
-
+document.addEventListener('DOMContentLoaded', () => {
+  traerProductos();
+  actualizarCarrito();
+});
 // ----- TRAER PRODUCTOS Y ARMAR CARTAS
 const traerProductos = async () => {
   let response = await fetch("../js/productos.json")
@@ -180,5 +183,3 @@ const pagar = async () => {
   console.log(data)
   window.open(data.init_point, "_blank")
 }
-traerProductos();
-actualizarCarrito();
