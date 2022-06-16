@@ -69,6 +69,7 @@ const avisoCarrito = (id) => {
   }
   cargarProductos(carrito, tablaCarrito, true);
 }
+
 const getCarrito = (item) => {
 
   let acum = "";
@@ -144,16 +145,11 @@ btnCarrito.addEventListener("click", () => getCarrito(carrito));
 
 let botonPagar = document.getElementById('botonPagar');
 botonPagar.addEventListener('click', () =>{
-  if(carrito.length>0){
-    pagar();
-}else{
-  Swal.fire({
+  carrito.length > 0 ? pagar() : Swal.fire({
     icon: 'error',
     title: 'Oops...',
-    text: 'Parece que tu carrito esta vacio.'
-  })
-}}
-);
+    text: 'Parece que tu carrito esta vacio.'});
+});
 
 const pagar = async () => {
 
